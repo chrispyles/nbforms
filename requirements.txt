@@ -1,0 +1,7 @@
+datascience
+pandas
+requests
+ipython
+ipywidgets
+hmac
+nbforms
