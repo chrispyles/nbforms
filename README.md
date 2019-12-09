@@ -75,6 +75,8 @@ form.ask("q1")
 
 This will output the widget and a "Submit" button that, when clicked, will send an HTTP POST request to your nbforms server with the student's username hash, notebook ID, question identifier, and response to be stored on the server.
 
+`Notebook.ask` can accept multiple questions; for example, `form.ask("q1", "q3")` would display a widget with `q1` and `q3` as its tabs. Passing no arguments to `Notebook.ask` will display all of the questions.
+
 ### In-Notebook: Retrieving Data
 
 nbforms allows you to get your data from the server and collect it into either a datascience `Table` or a pandas `DataFrame`. To retrieve the responses from the server, use `Notebook.to_table` or `Notebook.to_df`; the optional `user_hashes` argument (default `False`) indicates whether or not to include a column with the hashes username.

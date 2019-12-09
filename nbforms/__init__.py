@@ -97,10 +97,18 @@ class Notebook:
         ui = VBox([VBox([label, widget]), button])
         return ui, interactive
 
-    def ask(self, identifier):
-        assert identifier in self._identifiers, "question {} does not exist".format(identifier)
-        ui, interactive = self._arrange_single_widget(identifier)
-        display(ui, interactive)
+    def ask(self, *identifiers):
+        assert all([i in self._identifiers for i in identifiers]), "one or more questions do not exist".format()
+        if len(identifiers) == 0:
+            identifiers = self._identifiers
+        displays = []
+        for identifier in identifiers:
+            displays += [VBox(self._arrange_single_widget(identifier))]
+        t = Tab()
+        t.children = displays
+        for i in range(len(identifiers)):
+            t.set_title(i, identifiers[i])
+        display(t)
 
     def to_table(self, *identifiers, user_hashes=False):
         csv_string = self._get_data(identifiers, user_hashes=user_hashes)
