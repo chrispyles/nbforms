@@ -73,7 +73,7 @@ To collect the responses for a question, insert a cell that calls the `Notebook.
 form.ask("q1")
 ```
 
-This will output the widget and a "Submit" button that, when clicked, will send an HTTP POST request to your nbforms server with the student's username hash, notebook ID, question identifier, and response to be stored on the server.
+This will output the widget and a "Submit" button that, when clicked, will send an HTTP POST request to your nbforms server with the student's username, API key, notebook ID, question identifier, and response to be stored on the server.
 
 `Notebook.ask` can accept multiple questions; for example, `form.ask("q1", "q3")` would display a widget with `q1` and `q3` as its tabs. Passing no arguments to `Notebook.ask` will display all of the questions.
 
