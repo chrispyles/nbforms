@@ -3,5 +3,4 @@ pandas
 requests
 ipython
 ipywidgets
-hmac
 nbforms

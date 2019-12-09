@@ -3,7 +3,6 @@
 ###############################
 
 from .widgets import *
-from .utils import *
 
 import datascience as ds
 import pandas as pd
