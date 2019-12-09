@@ -54,7 +54,7 @@ The `server_url` key should be the URL to your Heroku-deployed nbforms-server, e
 
 Questions can have one of four types: `multiplechoice`, `checkbox`, `text`, or `paragraph`. The `type` key in the question is used to create the widget. If you have a `multiplechoice` or `checkbox`, you must provide a list of options as the `options` key. For `text` and `paragraph` responses, you can provide an optional `placeholder` key which will replace the default placeholder.
 
-There is a sample config file at [`demo/nbforms_config.json`](demo/nbforms_config.json).
+There is a sample config file at [`demo/nbforms_config.json`](demo/nbforms_config.json). Each nbforms-server comes with a page that will generate a config file for you. The config generator for the demo server can be found [here](https://nbforms-demo-server.herokuapp.com/config_generator.html)
 
 ### In-Notebook: Import and Instantiate
 
