@@ -85,6 +85,10 @@ form.to_table("q1", "q2", ...)
 form.to_df("q1", "q3", ..., user_hashes=True)
 ```
 
+### Database Maintenance
+
+There is not much database maintance that can be done, but you can optionally delete all responses on the server by running `rake clear` on your Heroku app.
+
 ## Remarks
 
 To preserve the privacy of notebook users while still maintaining the distinctions between them, nbforms has users input a username, which is then randomly hashed to be provided when a user sends their response. This has two important implications:
