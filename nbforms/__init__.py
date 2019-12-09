@@ -8,6 +8,7 @@ import datascience as ds
 import pandas as pd
 import requests
 import os
+import json
 from io import StringIO
 from getpass import getpass
 from ipywidgets import interact, Button, VBox, HBox, interactive_output, Label
@@ -16,17 +17,12 @@ from IPython.display import display
 class Notebook:
     """nbforms class for interacting with an nbforms server"""
 
-    def __init__(self, config_path="nbforms_config.py"):
+    def __init__(self, config_path="nbforms_config.json"):
         assert os.path.exists(config_path) and os.path.isfile(config_path), \
         "{} is not a valid config path".format(config_path)
 
         with open(config_path) as f:
-            contents = f.read()
-
-        exec_dict = {}
-        exec(contents, exec_dict)
-        assert "nbforms_config" in exec_dict, "inable to execute config file"
-        self._config = exec_dict["nbforms_config"]
+            self._config = json.load(f)
 
         assert all([i in self._config for i in ["server_url", "questions", "notebook"]]), \
         "config file missing required information"
@@ -115,4 +111,3 @@ class Notebook:
         csv_string = self._get_data(identifiers, user_hashes=user_hashes)
         df = pd.read_csv(StringIO(csv_string))
         return df
-        

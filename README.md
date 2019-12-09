@@ -22,31 +22,31 @@ To deploy the webapp, click the deploy button in the [nbforms-server README](htt
 
 ### Setup: Config File
 
-nbforms requires a config file to set up the `Notebook` class. The default path that `Notebook` checks is `./nbforms_config.py`, although you can pass a custom path to the `Notebook` constructor. The structure of the config file is very specific; you must assign the variable `nbforms_config` to a dict containing the information that the notebook needs to create widgets and send requests. The structure of this file is:
+nbforms requires a JSON-formatted config file to set up the `Notebook` class. The default path that `Notebook` checks is `./nbforms_config.json`, although you can pass a custom path to the `Notebook` constructor. The structure of the config file is very specific; it contains the information that the notebook needs to create widgets and send requests. The structure of this file is:
 
 ```python
-nbforms_config = {
-		"server_url": "",        		  # URL to your Heroku app
+{
+    "server_url": "",             # URL to your Heroku app
 
-		"notebook": "",  		 		  # an ID to collect responses
+    "notebook": "",               # an ID to collect responses
 
-		"questions": [{					  # questions to ask, a list of dicts
+    "questions": [{               # questions to ask, a list of dicts
 
-			"identifier": "",   		  # a question identifer, should be unique within
-										  # this notebook
-			"type": "",					  # question type; can be one of:
-										  # 	multiplechoice, checkbox, text, paragraph
+      "identifier": "",           # a question identifer, should be unique within
+                                  # this notebook
+      "type": "",                 # question type; can be one of:
+                                  #   multiplechoice, checkbox, text, paragraph
 
-			"question": "",				  # the question text
+      "question": "",             # the question text
 
-			"options": [				  # options from which to choose if type is 
-				...						  # multiplechoice or checkbox
-			],
-			"placeholder": ""			  # placeholder for textbox if type is text or
-										  # paragraph
-		}, 
-		...								  # more question dictionaries
-	]
+      "options": [                # options from which to choose if type is 
+        ...                       # multiplechoice or checkbox
+      ],
+      "placeholder": ""           # placeholder for textbox if type is text or
+                                  # paragraph
+    }, 
+    ...                           # more question dictionaries
+  ]
 }
 ```
 
@@ -54,11 +54,11 @@ The `server_url` key should be the URL to your Heroku-deployed nbforms-server, e
 
 Questions can have one of four types: `multiplechoice`, `checkbox`, `text`, or `paragraph`. The `type` key in the question is used to create the widget. If you have a `multiplechoice` or `checkbox`, you must provide a list of options as the `options` key. For `text` and `paragraph` responses, you can provide an optional `placeholder` key which will replace the default placeholder.
 
-There is a sample config file at [`demo/nbforms_config.py`](demo/nbforms_config.py).
+There is a sample config file at [`demo/nbforms_config.json`](demo/nbforms_config.json).
 
 ### In-Notebook: Import and Instantiate
 
-To use the nbforms, you must first import it and create a `Notebook` instance. This will load the config file (defaulting to look at `./nbforms_config.py`) and ask the user to input a username and a password. If the username already exists on the server, the password will be checked and an API key will be generated, to be stored in the `Notebook` class. If it does not exist, a new user will be created, and an API key generated. If the user _does_ exist but an incorrect password is provided, the cell will error.
+To use the nbforms, you must first import it and create a `Notebook` instance. This will load the config file (defaulting to look at `./nbforms_config.json`) and ask the user to input a username and a password. If the username already exists on the server, the password will be checked and an API key will be generated, to be stored in the `Notebook` class. If it does not exist, a new user will be created, and an API key generated. If the user _does_ exist but an incorrect password is provided, the cell will error.
 
 ```python
 import nbforms
