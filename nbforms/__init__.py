@@ -11,7 +11,7 @@ import os
 import json
 from io import StringIO
 from getpass import getpass
-from ipywidgets import interact, Button, VBox, HBox, interactive_output, Label
+from ipywidgets import interact, Button, VBox, HBox, interactive_output, Label, Tab
 from IPython.display import display
 
 class Notebook:

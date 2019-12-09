@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
 	name = "nbforms",
-	version = "0.1.5",
+	version = "0.1.6",
 	author = "Chris Pyles",
 	author_email = "cpyles@berkeley.edu",
 	description = "Jupyter Notebook forms using ipywidgets",
