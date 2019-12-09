@@ -32,7 +32,7 @@ class TextQuestion:
         except KeyError:
             self._placeholder = "Type something"
 
-    def to_widet_tuple(self):
+    def to_widget_tuple(self):
         return Label(self._question), Text(
             placeholder=self._placeholder
         )
@@ -45,7 +45,7 @@ class TextAreaQuestion:
         except KeyError:
             self._placeholder = "Type something"
 
-    def to_widet_tuple(self):
+    def to_widget_tuple(self):
         return Label(self._question), Textarea(
             placeholder=self._placeholder
         )

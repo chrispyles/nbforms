@@ -24,13 +24,16 @@ class Notebook:
         with open(config_path) as f:
             contents = f.read()
 
-        exec(contents)
-        try:
-            assert type(config) == dict, "config is not a dict"
-        except NameError:
-            assert False, "invalid config file"
-        self._config = config
+        exec_dict = {}
+        exec(contents, exec_dict)
+        assert "nbforms_config" in exec_dict, "inable to execute config file"
+        self._config = exec_dict["nbforms_config"]
+
+        assert all([i in self._config for i in ["server_url", "questions", "notebook"]]), \
+        "config file missing required information"
+
         self._server_url = self._config["server_url"]
+        self._notebook = self._config["notebook"]
 
         self._submit_url = os.path.join(self._server_url, "submit")
         self._data_url = os.path.join(self._server_url, "data")
@@ -59,12 +62,14 @@ class Notebook:
         requests.post(self._submit_url, {
             "identifier": identifier,
             "user_hash": self._user_hash,
+            "notebook": str(self._notebook),
             "response": str(self._responses[identifier])
         })
 
     def _get_data(self, identifiers, user_hashes=False):
         response = requests.get(self._data_url, {
             "questions": ",".join(identifiers),
+            "notebook": str(self._notebook),
             "user_hashes": (0, 1)[user_hashes]
         })
         return response.text

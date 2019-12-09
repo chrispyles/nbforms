@@ -1,5 +1,6 @@
-config = {
+nbforms_config = {
 	"server_url": "http://data-88-nbforms.herokuapp.com",
+	"notebook": 1,
 	"questions": [{
 		"identifier": "q1",
 		"type": "multiplechoice",
