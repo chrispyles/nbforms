@@ -14,6 +14,7 @@ nbforms_config = {
 	}, {
 		"identifier": "q2",
 		"type": "checkbox",
+		"data_type": "str",
 		"question": "Which of the following is a noble gas?",
 		"options": [
 			"Helium",
@@ -32,5 +33,9 @@ nbforms_config = {
 		"type": "paragraph",
 		"question": "List the noble gases.",
 		"placeholder": "Type here"
+	}, {
+		"identifier": "q5",
+		"type": "text",
+		"question": "What is 75% of 5?"
 	}]
 }
