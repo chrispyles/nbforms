@@ -52,6 +52,8 @@ The `server_url` key should be the URL to your Heroku-deployed nbforms-server, e
 
 Questions can have one of four types: `multiplechoice`, `checkbox`, `text`, or `paragraph`. The `type` key in the question is used to create the widget. If you have a `multiplechoice` or `checkbox`, you must provide a list of options as the `options` key. For `text` and `paragraph` responses, you can provide an optional `placeholder` key which will replace the default placeholder.
 
+There is a sample config file at [`demo/nbforms_config.py`](demo/nbforms_config.py).
+
 ### In-Notebook: Import and Instantiate
 
 To use the nbforms, you must first import it and create a `Notebook` instance. This will load the config file (defaulting to look at `./nbforms_config.py`) and ask the user to input a username. This username is then randomly hashed to preserve user privacy when data is on the server.
