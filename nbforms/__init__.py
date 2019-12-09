@@ -99,7 +99,7 @@ class Notebook:
         interactive = interactive_output(lambda response: self._save_current_response(identifier, response),
                                  {"response": widget})
         button = self._create_submit_button(identifier)
-        ui = VBox([HBox([label, widget]), button])
+        ui = VBox([VBox([label, widget]), button])
         return ui, interactive
 
     def ask(self, identifier):
