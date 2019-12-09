@@ -56,7 +56,7 @@ There is a sample config file at [`demo/nbforms_config.py`](demo/nbforms_config.
 
 ### In-Notebook: Import and Instantiate
 
-To use the nbforms, you must first import it and create a `Notebook` instance. This will load the config file (defaulting to look at `./nbforms_config.py`) and ask the user to input a username. This username is then randomly hashed to preserve user privacy when data is on the server.
+To use the nbforms, you must first import it and create a `Notebook` instance. This will load the config file (defaulting to look at `./nbforms_config.py`) and ask the user to input a username and a password. If the username already exists on the server, the password will be checked and an API key will be generated, to be stored in the `Notebook` class. If it does not exist, a new user will be created, and an API key generated. If the user _does_ exist but an incorrect password is provided, the cell will error.
 
 ```python
 import nbforms
@@ -88,11 +88,3 @@ form.to_df("q1", "q3", ..., user_hashes=True)
 ### Database Maintenance
 
 There is not much database maintance that can be done, but you can optionally delete all responses on the server by running `rake clear` on your Heroku app.
-
-## Remarks
-
-To preserve the privacy of notebook users while still maintaining the distinctions between them, nbforms has users input a username, which is then randomly hashed to be provided when a user sends their response. This has two important implications:
-1. You cannot find out which user sent in a particular response.
-2. If a user restarts their kernel or re-instantiates the `Notebook` object, they will be given a new hash, meaning that they will have two sets of responses on the server.
-
-This decision was made because the server is designed not to require authentification, and leaving identifiable information on the server violates the privacy of notebook users. You should keep these facts in mind when designing your notebook.

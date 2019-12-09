@@ -35,6 +35,7 @@ class Notebook:
         self._server_url = self._config["server_url"]
         self._notebook = self._config["notebook"]
 
+        self._auth_url = os.path.join(self._server_url, "auth")
         self._submit_url = os.path.join(self._server_url, "submit")
         self._data_url = os.path.join(self._server_url, "data")
 
@@ -51,9 +52,20 @@ class Notebook:
             widget = TYPE_MAPPING[q["type"]](q)
             self._widgets[q["identifier"]] = widget
 
-        # ask user for a username
-        username = getpass("Please enter a username (this will be hashed to keep your responses anonymous).\n")
-        self._user_hash = hash_string(username)
+        # ask user for a username and password
+        print("Please enter a username and password for nbforms.")
+        self._username = input("Username: ")
+        password = getpass("Password: ")
+
+        # auth to get API key
+        auth_response = requests.post(self._auth_url, {
+            "username": self._username,
+            "password": password
+        })
+
+        # check that sign in was OK, store API key
+        assert auth_response.text != "INVALID USERNAME", "Incorrect username or password"
+        self._api_key = auth_response.text
 
     def _save_current_response(self, identifier, response):
         self._responses[identifier] = response
@@ -61,9 +73,10 @@ class Notebook:
     def _send_response(self, identifier):
         requests.post(self._submit_url, {
             "identifier": identifier,
-            "user_hash": self._user_hash,
+            "username": self._username,
+            "api_key": self._api_key,
             "notebook": str(self._notebook),
-            "response": str(self._responses[identifier])
+            "response": str(self._responses[identifier]),
         })
 
     def _get_data(self, identifiers, user_hashes=False):
