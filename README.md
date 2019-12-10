@@ -30,10 +30,13 @@ nbforms requires a JSON-formatted config file to set up the `Notebook` class. Th
 
     "notebook": "",               # an ID to collect responses
 
+    "auth": "",                   # indicates auth provider, defaults to nbforms
+
     "questions": [{               # questions to ask, a list of dicts
 
       "identifier": "",           # a question identifer, should be unique within
                                   # this notebook
+
       "type": "",                 # question type; can be one of:
                                   #   multiplechoice, checkbox, text, paragraph
 
@@ -50,7 +53,7 @@ nbforms requires a JSON-formatted config file to set up the `Notebook` class. Th
 }
 ```
 
-The `server_url` key should be the URL to your Heroku-deployed nbforms-server, e.g. `https://my-nbforms-server.herokuapp.com`. The `notebook` key should be some string or number to identify the notebook that you're deploying. This is used to keep the notebook responses distinguished on the server. Finally, the `questions` key should be a list of dictionaries that define the information for your questions.
+The `server_url` key should be the URL to your Heroku-deployed nbforms-server, e.g. `https://my-nbforms-server.herokuapp.com`. The `notebook` key should be some string or number to identify the notebook that you're deploying. This is used to keep the notebook responses distinguished on the server. The `auth` key is used to indicate which auth provider you would like to use. _Currently, we only offer Google OAuth (`google`). If you do not want to use Google, leave this key out of the config file and the default nbforms auth will be used. Finally, the `questions` key should be a list of dictionaries that define the information for your questions.
 
 Questions can have one of four types: `multiplechoice`, `checkbox`, `text`, or `paragraph`. The `type` key in the question is used to create the widget. If you have a `multiplechoice` or `checkbox`, you must provide a list of options as the `options` key. For `text` and `paragraph` responses, you can provide an optional `placeholder` key which will replace the default placeholder.
 
@@ -65,6 +68,8 @@ import nbforms
 form = nbforms.Notebook()
 ```
 
+If you elect to use a 3rd party auth provider (indicated in the config file), then the cell above will instead provide a link to that provider's login page. Once the user logs in, they will be redirected back to the nbforms server and given an API key, which they will be asked to enter in the notebook.
+
 ### In-Notebook: Collecting Responses
 
 To collect the responses for a question, insert a cell that calls the `Notebook.ask` function on the **identifier** of the question. For example, if I had a question `q1`, I would call
@@ -73,7 +78,7 @@ To collect the responses for a question, insert a cell that calls the `Notebook.
 form.ask("q1")
 ```
 
-This will output the widget and a "Submit" button that, when clicked, will send an HTTP POST request to your nbforms server with the student's username, API key, notebook ID, question identifier, and response to be stored on the server.
+This will output the widget and a "Submit" button that, when clicked, will send an HTTP POST request to your nbforms server with the student's API key, notebook ID, question identifier, and response to be stored on the server.
 
 `Notebook.ask` can accept multiple questions; for example, `form.ask("q1", "q3")` would display a widget with `q1` and `q3` as its tabs. Passing no arguments to `Notebook.ask` will display all of the questions.
 
