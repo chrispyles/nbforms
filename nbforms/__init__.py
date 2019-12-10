@@ -12,7 +12,7 @@ import json
 from io import StringIO
 from getpass import getpass
 from ipywidgets import interact, Button, VBox, HBox, interactive_output, Label, Tab
-from IPython.display import display
+from IPython.display import display, HTML
 
 class Notebook:
     """nbforms class for interacting with an nbforms server"""
@@ -33,6 +33,7 @@ class Notebook:
         self._auth_url = os.path.join(self._server_url, "auth")
         self._submit_url = os.path.join(self._server_url, "submit")
         self._data_url = os.path.join(self._server_url, "data")
+        self._login_url = os.path.join(self._server_url, "login")
 
         self._questions = self._config["questions"]
         
@@ -47,20 +48,32 @@ class Notebook:
             widget = TYPE_MAPPING[q["type"]](q)
             self._widgets[q["identifier"]] = widget
 
-        # ask user for a username and password
-        print("Please enter a username and password for nbforms.")
-        self._username = input("Username: ")
-        password = getpass("Password: ")
+        # auth
+        if "auth" in self._config:
+            assert self._config["auth"] in ["google"], "invalid auth provider"
 
-        # auth to get API key
-        auth_response = requests.post(self._auth_url, {
-            "username": self._username,
-            "password": password
-        })
+            # send them to login page
+            display(HTML(f"""
+            <p>Please <a href="{self._login_url}" target="_blank">log in</a> to the nbforms server and enter your API key below.</p>
+            """))
 
-        # check that sign in was OK, store API key
-        assert auth_response.text != "INVALID USERNAME", "Incorrect username or password"
-        self._api_key = auth_response.text
+            self._api_key = input()
+
+        else:
+            # ask user for a username and password
+            print("Please enter a username and password for nbforms.")
+            username = input("Username: ")
+            password = getpass("Password: ")
+
+            # auth to get API key
+            auth_response = requests.post(self._auth_url, {
+                "username": username,
+                "password": password
+            })
+
+            # check that sign in was OK, store API key
+            assert auth_response.text != "INVALID USERNAME", "Incorrect username or password"
+            self._api_key = auth_response.text
 
     def _save_current_response(self, identifier, response):
         self._responses[identifier] = response
@@ -68,7 +81,6 @@ class Notebook:
     def _send_response(self, identifier):
         requests.post(self._submit_url, {
             "identifier": identifier,
-            "username": self._username,
             "api_key": self._api_key,
             "notebook": str(self._notebook),
             "response": str(self._responses[identifier]),
@@ -111,11 +123,15 @@ class Notebook:
         display(t)
 
     def to_table(self, *identifiers, user_hashes=False):
+        if len(identifiers) == 0:
+            identifiers = self._identifiers
         csv_string = self._get_data(identifiers, user_hashes=user_hashes)
         df = pd.read_csv(StringIO(csv_string))
         return ds.Table.from_df(df)
 
     def to_df(self, *identifiers, user_hashes=False):
+        if len(identifiers) == 0:
+            identifiers = self._identifiers
         csv_string = self._get_data(identifiers, user_hashes=user_hashes)
         df = pd.read_csv(StringIO(csv_string))
         return df
