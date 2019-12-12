@@ -97,3 +97,9 @@ form.to_df("q1", "q3", ..., user_hashes=True)
 ### Database Maintenance
 
 There is not much database maintance that can be done, but you can optionally delete all responses on the server by running `rake clear` on your Heroku app.
+
+## Notes
+
+### Setting Up Google OAuth
+
+To use Google OAuth, you need to get set up a GCP project with OAuth and use the [Heroku dashboard](https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard) to set up the necessary environment variables. You should set `GOOGLE_KEY` to your client ID and `GOOGLE_SECRET` to your client secret.

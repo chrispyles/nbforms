@@ -54,7 +54,8 @@ class Notebook:
 
             # send them to login page
             display(HTML(f"""
-            <p>Please <a href="{self._login_url}" target="_blank">log in</a> to the nbforms server and enter your API key below.</p>
+            <p>Please <a href="{self._login_url}" target="_blank">log in</a> to the 
+            nbforms server and enter your API key below.</p>
             """))
 
             self._api_key = input()
@@ -110,7 +111,7 @@ class Notebook:
         return ui, interactive
 
     def ask(self, *identifiers):
-        assert all([i in self._identifiers for i in identifiers]), "one or more questions do not exist".format()
+        assert all([i in self._identifiers for i in identifiers]), "one or more questions do not exist"
         if len(identifiers) == 0:
             identifiers = self._identifiers
         displays = []
