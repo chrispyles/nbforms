@@ -1,6 +1,7 @@
 {
   "server_url": "https://nbforms-demo-server.herokuapp.com/",
   "notebook": 1,
+  "attendance": true,
   "questions": [
     {
       "identifier": "q1",

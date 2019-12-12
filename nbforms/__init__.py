@@ -48,6 +48,11 @@ class Notebook:
             widget = TYPE_MAPPING[q["type"]](q)
             self._widgets[q["identifier"]] = widget
 
+        # attendance
+        if "attendance" in self._config:
+            self._attendance = True
+            self._attendance_url = os.path.join(self._server_url, "attendance")
+
         # auth
         if "auth" in self._config:
             assert self._config["auth"] in ["google"], "invalid auth provider"
@@ -80,12 +85,14 @@ class Notebook:
         self._responses[identifier] = response
 
     def _send_response(self, identifier):
-        requests.post(self._submit_url, {
+        response = requests.post(self._submit_url, {
             "identifier": identifier,
             "api_key": self._api_key,
             "notebook": str(self._notebook),
             "response": str(self._responses[identifier]),
         })
+        assert response.text != "SUBMISSION UNSUCCESSFUL" and response.text == "SUBMISSION SUCCESSFUL", \
+        "submission was not sent successfully"
 
     def _get_data(self, identifiers, user_hashes=False):
         response = requests.get(self._data_url, {
@@ -136,3 +143,12 @@ class Notebook:
         csv_string = self._get_data(identifiers, user_hashes=user_hashes)
         df = pd.read_csv(StringIO(csv_string))
         return df
+
+    def take_attendance(self):
+        assert self._attendance, "this notebook does not record attendance"
+        response = requests.post(self._attendance_url, {
+            "api_key": self._api_key,
+            "notebook": self._notebook,
+        })
+        assert response.text != "ATTENDANCE NOT RECORDED", "attendance not recorded successfully"
+        assert response.text == "ATTENDANCE RECORDED", "attendance not recorded successfully"

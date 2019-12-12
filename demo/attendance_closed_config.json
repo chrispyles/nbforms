@@ -1,0 +1,18 @@
+{
+  "server_url": "https://nbforms-demo-server.herokuapp.com/",
+  "notebook": "attendance-closed",
+  "attendance": true,
+  "questions": [
+    {
+      "identifier": "q1",
+      "type": "multiplechoice",
+      "question": "Which of the following is a noble gas?",
+      "options": [
+        "Helium",
+        "Chlorine",
+        "Oxygen",
+        "Lithium"
+      ]
+    }
+  ]
+}
