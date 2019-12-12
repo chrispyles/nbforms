@@ -39,6 +39,7 @@ class Notebook:
         
         self._identifiers = []
         self._widgets = {}
+        self._widget_instances = {}
         self._responses = {}
 
         for q in self._questions:
@@ -102,11 +103,18 @@ class Notebook:
         })
         return response.text
 
+    def _confirm_submission(self, identifier):
+        self._widget_instances
+
     def _create_submit_button(self, identifier):
         button = Button(
-            description="Submit"
+            description="Submit",
+            update=True
         )
-        button.on_click(lambda b: self._send_response(identifier))
+        def send(b):
+            self._send_response(identifier)
+            b.button_style = 'success'
+        button.on_click(send)
         return button
 
     def _arrange_single_widget(self, identifier):
@@ -128,7 +136,7 @@ class Notebook:
         t.children = displays
         for i in range(len(identifiers)):
             t.set_title(i, identifiers[i])
-        display(t)
+        display(t, display_id="widget" + "-".join(identifiers), update=True)
 
     def to_table(self, *identifiers, user_hashes=False):
         if len(identifiers) == 0:
@@ -152,3 +160,4 @@ class Notebook:
         })
         assert response.text != "ATTENDANCE NOT RECORDED", "attendance not recorded successfully"
         assert response.text == "ATTENDANCE RECORDED", "attendance not recorded successfully"
+        print("Your attendance has been recorded.")
