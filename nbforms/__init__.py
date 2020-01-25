@@ -15,7 +15,17 @@ from ipywidgets import interact, Button, VBox, HBox, interactive_output, Label, 
 from IPython.display import display, HTML
 
 class Notebook:
-    """nbforms class for interacting with an nbforms server"""
+    """nbforms class for interacting with an nbforms server
+    
+    The Notebook class sends requests to the nbforms server that records users'
+    resposnes. It provides auth so that users can be differentiated on the server,
+    stores users' responses from widgets, generates and displays the necessary
+    widgets, and pulls data from the server for analysis.
+
+    Args:
+        config_path (str): Path to your nbforms config file
+
+    """
 
     def __init__(self, config_path="nbforms_config.json"):
         # check that config_path exists
@@ -161,7 +171,12 @@ class Notebook:
         return ui, interactive
 
     def ask(self, *identifiers):
-        """Ask any or all questions in the config file and display widgets"""
+        """Ask any or all questions in the config file and display widgets
+        
+        Args:
+            identifiers: question identifiers to be asked in the widget; defaults to all
+        
+        """
 
         # check that all identifiers are valid
         assert all([i in self._identifiers for i in identifiers]), "one or more questions do not exist"
@@ -187,14 +202,26 @@ class Notebook:
         display(t, display_id="widget" + "-".join(identifiers), update=True)
 
     def to_table(self, *identifiers, user_hashes=False):
-        """Get data from the server and return a datascience Table"""
+        """Get data from the server and return a datascience Table
+        
+        Args:
+            identifiers: which questions to include in the table, defaults to all
+            user_hashes (bool): whether to include hashes of usernames
+        
+        """
         
         # get a pandas DataFrame and return that turned into a Table
         df = self.to_df(*identifiers, user_hashes=user_hashes)
         return ds.Table.from_df(df)
 
     def to_df(self, *identifiers, user_hashes=False):
-        """Get data from the server and return a pandas DataFrame"""
+        """Get data from the server and return a pandas DataFrame
+        
+        Args:
+            identifiers: which questions to include in the table, defaults to all
+            user_hashes (bool): whether to include hashes of usernames
+        
+        """
         
         # check that all identifiers are valid
         assert all([i in self._identifiers for i in identifiers]), "one or more questions do not exist"

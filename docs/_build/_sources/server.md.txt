@@ -1,0 +1,9 @@
+# Server
+
+Before using nbforms in a notebook, you must deploy a webapp to Heroku which will collect and organize the responses. If you plan to have multiple notebooks, you only need one server, as you can provide a notebook identifier in the config files that will distinguish responses.
+
+To deploy the webapp, click the deploy button in the [nbforms-server README](https://github.com/chrispyles/nbforms-server).
+
+## Managing the Server
+
+<!-- rake tasks, etc. -->
