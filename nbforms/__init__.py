@@ -59,35 +59,45 @@ class Notebook:
             self._attendance = True
             self._attendance_url = os.path.join(self._server_url, "attendance")
 
-        # have users authenticate with OAuth
-        if "auth" in self._config and self._config["auth"] != "default":
-            assert self._config["auth"] in ["google"], "invalid auth provider"
+        # check to see if there's already a key in the environment from another
+        # Notebook instance
+        try:
+            global __NBFORMS_API_KEY__
+            self._api_key = __NBFORMS_API_KEY__
 
-            # send them to login page
-            display(HTML(f"""
-            <p>Please <a href="{self._login_url}" target="_blank">log in</a> to the 
-            nbforms server and enter your API key below.</p>
-            """))
+        except NameError:
+            # have users authenticate with OAuth
+            if "auth" in self._config and self._config["auth"] != "default":
+                assert self._config["auth"] in ["google"], "invalid auth provider"
 
-            # ask user for API key
-            self._api_key = input()
+                # send them to login page
+                display(HTML(f"""
+                <p>Please <a href="{self._login_url}" target="_blank">log in</a> to the 
+                nbforms server and enter your API key below.</p>
+                """))
 
-        # else have them auth with default auth
-        else:
-            # ask user for a username and password
-            print("Please enter a username and password for nbforms.")
-            username = input("Username: ")
-            password = getpass("Password: ")
+                # ask user for API key
+                self._api_key = input()
 
-            # auth to get API key
-            auth_response = requests.post(self._auth_url, {
-                "username": username,
-                "password": password
-            })
+            # else have them auth with default auth
+            else:
+                # ask user for a username and password
+                print("Please enter a username and password for nbforms.")
+                username = input("Username: ")
+                password = getpass("Password: ")
 
-            # check that sign in was OK, store API key
-            assert auth_response.text != "INVALID USERNAME", "Incorrect username or password"
-            self._api_key = auth_response.text
+                # auth to get API key
+                auth_response = requests.post(self._auth_url, {
+                    "username": username,
+                    "password": password
+                })
+
+                # check that sign in was OK, store API key
+                assert auth_response.text != "INVALID USERNAME", "Incorrect username or password"
+                self._api_key = auth_response.text
+            
+            # create global API key
+            __NBFORMS_API_KEY__ = self._api_key
 
     def _save_current_response(self, identifier, response):
         """Saves responses from widgets"""
