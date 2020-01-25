@@ -188,19 +188,9 @@ class Notebook:
 
     def to_table(self, *identifiers, user_hashes=False):
         """Get data from the server and return a datascience Table"""
-
-         # check that all identifiers are valid
-        assert all([i in self._identifiers for i in identifiers]), "one or more questions do not exist"
-
-        # default to getting all questions
-        if len(identifiers) == 0:
-            identifiers = self._identifiers
-
-        # send request to server and get the CSV string
-        csv_string = self._get_data(identifiers, user_hashes=user_hashes)
-
-        # send to pandas DataFrame and convert to datascience Table
-        df = pd.read_csv(StringIO(csv_string))
+        
+        # get a pandas DataFrame and return that turned into a Table
+        df = self.to_df(*identifiers, user_hashes=user_hashes)
         return ds.Table.from_df(df)
 
     def to_df(self, *identifiers, user_hashes=False):
@@ -215,6 +205,9 @@ class Notebook:
 
         # send request to server and get the CSV string
         csv_string = self._get_data(identifiers, user_hashes=user_hashes)
+
+        # check that we have unlocked questions
+        assert csv_string != "NO UNLOCKED QUESTIONS", "No unlocked questions were requested from the server"
 
         # send to pandas DataFrame and return
         df = pd.read_csv(StringIO(csv_string))
