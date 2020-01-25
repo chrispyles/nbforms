@@ -1,3 +1,3 @@
 recommonmark
-napoleon
+# napoleon
 sphinx_markdown_tables
