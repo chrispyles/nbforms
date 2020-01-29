@@ -2,6 +2,8 @@
 ###### nbforms Python API #####
 ###############################
 
+# TODO: send all questions on single submit
+
 from .widgets import *
 
 import datascience as ds
@@ -55,6 +57,7 @@ class Notebook:
         self._widgets = {}
         self._widget_instances = {}
         self._responses = {}
+        self._updated_since_last_post = {}
 
         for q in self._questions:
             # check that each question has the required keys
@@ -73,56 +76,73 @@ class Notebook:
         # Notebook instance
         try:
             global __NBFORMS_API_KEY__
-            self._api_key = __NBFORMS_API_KEY__
+            if __NBFORMS_API_KEY__:
+                self._api_key = __NBFORMS_API_KEY__
+            else:
+                self._auth()
 
         except NameError:
-            # have users authenticate with OAuth
-            if "auth" in self._config and self._config["auth"] != "default":
-                assert self._config["auth"] in ["google"], "invalid auth provider"
+            self._auth()
 
+        # create global API key
+        __NBFORMS_API_KEY__ = self._api_key
+            
+
+    def _auth(self):
+        # have users authenticate with OAuth
+        if "auth" in self._config and self._config["auth"] != "default":
+            assert self._config["auth"] in ["google", "none"], "invalid auth provider"
+
+            if self._config["auth"] == "google":
                 # send them to login page
                 display(HTML(f"""
                 <p>Please <a href="{self._login_url}" target="_blank">log in</a> to the 
                 nbforms server and enter your API key below.</p>
                 """))
-
-                # ask user for API key
-                self._api_key = input()
-
-            # else have them auth with default auth
+            
             else:
-                # ask user for a username and password
-                print("Please enter a username and password for nbforms.")
-                username = input("Username: ")
-                password = getpass("Password: ")
-
-                # auth to get API key
-                auth_response = requests.post(self._auth_url, {
-                    "username": username,
-                    "password": password
-                })
+                # send request to get API key
+                auth_response = requests.post(self._auth_url)
 
                 # check that sign in was OK, store API key
-                assert auth_response.text != "INVALID USERNAME", "Incorrect username or password"
+                assert auth_response.text != "INVALID USERNAME", "Was not able to get API key"
                 self._api_key = auth_response.text
-            
-            # create global API key
-            __NBFORMS_API_KEY__ = self._api_key
+
+        # else have them auth with default auth
+        else:
+            # ask user for a username and password
+            print("Please enter a username and password for nbforms.")
+            username = input("Username: ")
+            password = getpass("Password: ")
+
+            # auth to get API key
+            auth_response = requests.post(self._auth_url, {
+                "username": username,
+                "password": password
+            })
+
+            # check that sign in was OK, store API key
+            assert auth_response.text != "INVALID USERNAME", "Incorrect username or password"
+            self._api_key = auth_response.text
 
     def _save_current_response(self, identifier, response):
         """Saves responses from widgets"""
         self._responses[identifier] = response
+        self._updated_since_last_post[identifier] = True
 
-    def _send_response(self, identifier):
+    def _send_response(self):
         """Sends responses to the nbforms server"""
-        response = requests.post(self._submit_url, {
-            "identifier": identifier,
-            "api_key": self._api_key,
-            "notebook": str(self._notebook),
-            "response": str(self._responses[identifier]),
-        })
-        assert response.text != "SUBMISSION UNSUCCESSFUL" and response.text == "SUBMISSION SUCCESSFUL", \
-        "submission was not sent successfully"
+        for identifier in self._identifiers:
+            if identifier in self._responses and identifier in self._updated_since_last_post and self._updated_since_last_post[identifier]:
+                response = requests.post(self._submit_url, {
+                    "identifier": identifier,
+                    "api_key": self._api_key,
+                    "notebook": str(self._notebook),
+                    "response": str(self._responses[identifier]),
+                })
+                assert response.text != "SUBMISSION UNSUCCESSFUL" and response.text == "SUBMISSION SUCCESSFUL", \
+                "submission was not sent successfully"
+                self._updated_since_last_post[identifier] = False
 
     def _get_data(self, identifiers, user_hashes=False):
         """Get data from the server"""
@@ -147,7 +167,7 @@ class Notebook:
 
         # create the function that will be called when the button is clicked
         def send(b):
-            self._send_response(identifier)
+            self._send_response()
             b.button_style = 'success'
         
         button.on_click(send)
