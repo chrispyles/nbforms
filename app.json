@@ -1,5 +1,6 @@
 {
 	"name": "nbforms Server",
 	"description": "A Sinatra-based server for the Python nbforms package",
-	"repository": "https://github.com/chrispyles/nbforms-server"
+	"repository": "https://github.com/chrispyles/nbforms",
+	"template": "https://github.com/chrispyles/nbforms/tree/server"
 }
