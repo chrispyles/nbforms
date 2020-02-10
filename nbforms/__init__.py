@@ -2,7 +2,7 @@
 ###### nbforms Python API #####
 ###############################
 
-# TODO: send all questions on single submit
+# TODO: change from tabs to vboxes
 
 from .widgets import *
 
@@ -99,6 +99,8 @@ class Notebook:
                 <p>Please <a href="{self._login_url}" target="_blank">log in</a> to the 
                 nbforms server and enter your API key below.</p>
                 """))
+
+                self._api_key = input()
             
             else:
                 # send request to get API key
@@ -130,10 +132,13 @@ class Notebook:
         self._responses[identifier] = response
         self._updated_since_last_post[identifier] = True
 
+    def _was_updated(self, identifier):
+        return identifier in self._updated_since_last_post and self._updated_since_last_post[identifier]
+
     def _send_response(self):
         """Sends responses to the nbforms server"""
         for identifier in self._identifiers:
-            if identifier in self._responses and identifier in self._updated_since_last_post and self._updated_since_last_post[identifier]:
+            if identifier in self._responses and self._was_updated(identifier):
                 response = requests.post(self._submit_url, {
                     "identifier": identifier,
                     "api_key": self._api_key,
@@ -156,7 +161,7 @@ class Notebook:
     # def _confirm_submission(self, identifier):
     #     self._widget_instances
 
-    def _create_submit_button(self, identifier):
+    def _create_submit_button(self): # , identifier):
         """Create the submit button for a widget"""
 
         # create the Button instance
@@ -183,11 +188,11 @@ class Notebook:
         interactive = interactive_output(lambda response: self._save_current_response(identifier, response),
                                  {"response": widget})
 
-        # create the button
-        button = self._create_submit_button(identifier)
+        # # create the button
+        # button = self._create_submit_button(identifier)
 
         # create the UI with VBoxes and return the ui, interactive tuple
-        ui = VBox([VBox([label, widget]), button])
+        ui = VBox([label, widget]) # VBox([VBox([label, widget]), button])
         return ui, interactive
 
     def ask(self, *identifiers):
@@ -210,13 +215,19 @@ class Notebook:
         for identifier in identifiers:
             displays += [VBox(self._arrange_single_widget(identifier))]
 
-        # create the Tab that will display all the widgets
-        t = Tab()
-        t.children = displays
+        # create submit button
+        displays += [self._create_submit_button()]
 
-        # set tab titles to identifiers
-        for i in range(len(identifiers)):
-            t.set_title(i, identifiers[i])
+        # # create the Tab that will display all the widgets
+        # t = Tab()
+        # t.children = displays
+
+        # create VBox to display
+        t = VBox(displays)
+
+        # # set tab titles to identifiers
+        # for i in range(len(identifiers)):
+        #     t.set_title(i, identifiers[i])
 
         # display the widget
         display(t, display_id="widget" + "-".join(identifiers), update=True)
