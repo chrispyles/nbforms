@@ -2,7 +2,7 @@
 
 ## Configuration File
 
-nbforms requires a JSON-formatted config file to set up the `Notebook` class. The default path that `Notebook` checks is `./nbforms_config.json`, although you can pass a custom path to the `Notebook` constructor. The structure of the config file is very specific; it contains the information that the notebook needs to create widgets and send requests. The structure of this file is:
+nbforms requires a JSON-formatted config file to set up the `Form` class. The default path that `Form` checks is `./nbforms_config.json`, although you can pass a custom path to the `Form` constructor. The structure of the config file is very specific; it contains the information that the notebook needs to create widgets and send requests. The structure of this file is:
 
 ```python
 {
@@ -45,18 +45,18 @@ Note that the `checkbox` type currently does not display actual checkboxes, but 
 
 ## Using the Notebook API
 
-To use the nbforms, you must first import it and create a `Notebook` instance. This will load the config file (defaulting to look at `./nbforms_config.json`) and will have the user log in using the auth provider specified in the config file, or the normal nbforms login if none was provided. Note that if there is already an existing `Notebook` instance, the user will not be asked to log in again, as their API key was stored in a global variable that the new instance accessed.
+To use the nbforms, you must first import it and create a `Form` instance. This will load the config file (defaulting to look at `./nbforms_config.json`) and will have the user log in using the auth provider specified in the config file, or the normal nbforms login if none was provided. Note that if there is already an existing `Form` instance, the user will not be asked to log in again, as their API key was stored in a global variable that the new instance accessed.
 
 ```python
 import nbforms
-form = nbforms.Notebook()
+form = nbforms.Form()
 ```
 
 If you elect to use a 3rd party auth provider (indicated in the config file), then the cell above will instead provide a link to that provider's login page. Once the user logs in, they will be redirected back to the nbforms server and given an API key, which they will be asked to enter in the notebook.
 
 ### Collecting Responses
 
-To collect the responses for a question, insert a cell that calls the `Notebook.ask` function on the **identifier** of the question. For example, if I had a question `q1`, I would call
+To collect the responses for a question, insert a cell that calls the `Form.ask` function on the **identifier** of the question. For example, if I had a question `q1`, I would call
 
 ```python
 form.ask("q1")
@@ -64,13 +64,13 @@ form.ask("q1")
 
 This will output the widget and a "Submit" button that, when clicked, will send an HTTP POST request to your nbforms server with the student's API key, notebook ID, question identifier, and response to be stored on the server.
 
-`Notebook.ask` can accept multiple questions; for example, `form.ask("q1", "q3")` would display a widget with `q1` and `q3` as its tabs. Passing no arguments to `Notebook.ask` will display all of the questions.
+`Form.ask` can accept multiple questions; for example, `form.ask("q1", "q3")` would display a widget with `q1` and `q3` as its tabs. Passing no arguments to `Form.ask` will display all of the questions.
 
 **Users must press the "Submit" button on _each_ tab of the widget, as the button will only send their response for the question in the current tab.** If you call `form.ask("q1", "q3", "q4")`, then users should press "Submit" three times, once in each tab.
 
 ### Retrieving Data
 
-nbforms allows you to get your data from the server and collect it into either a datascience `Table` or a pandas `DataFrame`. To retrieve the responses from the server, use `Notebook.to_table` or `Notebook.to_df`; the optional `user_hashes` argument (default `False`) indicates whether or not to include a column with a randomly generated hash as a pseudo-username.
+nbforms allows you to get your data from the server and collect it into either a datascience `Table` or a pandas `DataFrame`. To retrieve the responses from the server, use `Form.to_table` or `Form.to_df`; the optional `user_hashes` argument (default `False`) indicates whether or not to include a column with a randomly generated hash as a pseudo-username.
 
 ```python
 # datascience Table

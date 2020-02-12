@@ -167,11 +167,11 @@
 <div class="section" id="module-nbforms">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nbforms" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="nbforms.Notebook">
-<em class="property">class </em><code class="descclassname">nbforms.</code><code class="descname">Notebook</code><span class="sig-paren">(</span><em>config_path='nbforms_config.json'</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Notebook" title="Permalink to this definition">¶</a></dt>
+<dt id="nbforms.Form">
+<em class="property">class </em><code class="descclassname">nbforms.</code><code class="descname">Form</code><span class="sig-paren">(</span><em>config_path='nbforms_config.json'</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>nbforms class for interacting with an nbforms server</p>
-<p>The Notebook class sends requests to the nbforms server that records users’
+<p>The Form class sends requests to the nbforms server that records users’
 resposnes. It provides auth so that users can be differentiated on the server,
 stores users’ responses from widgets, generates and displays the necessary
 widgets, and pulls data from the server for analysis.</p>
@@ -184,8 +184,8 @@ widgets, and pulls data from the server for analysis.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="nbforms.Notebook.ask">
-<code class="descname">ask</code><span class="sig-paren">(</span><em>*identifiers</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Notebook.ask" title="Permalink to this definition">¶</a></dt>
+<dt id="nbforms.Form.ask">
+<code class="descname">ask</code><span class="sig-paren">(</span><em>*identifiers</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.ask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ask any or all questions in the config file and display widgets</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -198,14 +198,14 @@ widgets, and pulls data from the server for analysis.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nbforms.Notebook.take_attendance">
-<code class="descname">take_attendance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Notebook.take_attendance" title="Permalink to this definition">¶</a></dt>
+<dt id="nbforms.Form.take_attendance">
+<code class="descname">take_attendance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.take_attendance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log attendance on the nbforms server</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nbforms.Notebook.to_df">
-<code class="descname">to_df</code><span class="sig-paren">(</span><em>*identifiers</em>, <em>user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Notebook.to_df" title="Permalink to this definition">¶</a></dt>
+<dt id="nbforms.Form.to_df">
+<code class="descname">to_df</code><span class="sig-paren">(</span><em>*identifiers</em>, <em>user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.to_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get data from the server and return a pandas DataFrame</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -222,8 +222,8 @@ widgets, and pulls data from the server for analysis.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nbforms.Notebook.to_table">
-<code class="descname">to_table</code><span class="sig-paren">(</span><em>*identifiers</em>, <em>user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Notebook.to_table" title="Permalink to this definition">¶</a></dt>
+<dt id="nbforms.Form.to_table">
+<code class="descname">to_table</code><span class="sig-paren">(</span><em>*identifiers</em>, <em>user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.to_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get data from the server and return a datascience Table</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

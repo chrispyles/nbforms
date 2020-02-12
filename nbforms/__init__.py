@@ -16,10 +16,10 @@ from getpass import getpass
 from ipywidgets import interact, Button, VBox, HBox, interactive_output, Label, Tab
 from IPython.display import display, HTML
 
-class Notebook:
+class Form:
     """nbforms class for interacting with an nbforms server
     
-    The Notebook class sends requests to the nbforms server that records users'
+    The Form class sends requests to the nbforms server that records users'
     resposnes. It provides auth so that users can be differentiated on the server,
     stores users' responses from widgets, generates and displays the necessary
     widgets, and pulls data from the server for analysis.
@@ -202,6 +202,13 @@ class Notebook:
             identifiers: question identifiers to be asked in the widget; defaults to all
         
         """
+        # extract all questions that have been updated before this ask all
+        previously_updated_questions = [identifier for identifier in self._updated_since_last_post \
+            if self._updated_since_last_post[identifier] and identifier in identifiers]
+        
+        # restore any previous responses that would be overwritten
+        previous_responses = {identifier : self._responses[identifier] for identifier in self._responses \
+            if identifier in previously_updated_questions}
 
         # check that all identifiers are valid
         assert all([i in self._identifiers for i in identifiers]), "one or more questions do not exist"
@@ -231,6 +238,15 @@ class Notebook:
 
         # display the widget
         display(t, display_id="widget" + "-".join(identifiers), update=True)
+
+        # clear the None values that are autoselected
+        for identifier in identifiers:
+            if identifier not in previously_updated_questions:
+                self._updated_since_last_post[identifier] = False
+
+        # restore previous responses for those overwritten by new widget
+        for identifier in previous_responses:
+            self._responses[identifier] = previous_responses[identifier]
 
     def to_table(self, *identifiers, user_hashes=False):
         """Get data from the server and return a datascience Table

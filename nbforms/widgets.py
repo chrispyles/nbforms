@@ -11,7 +11,8 @@ class MultipleChoiceQuestion:
 
     def to_widget_tuple(self):
         return Label(self._question), RadioButtons(
-            options=self._options
+            options = self._options,
+            value = None
         )
 
 class CheckboxQuestion:
@@ -21,7 +22,7 @@ class CheckboxQuestion:
 
     def to_widget_tuple(self):
         return Label(self._question), SelectMultiple(
-            options=self._options
+            options = self._options
         )
 
 class TextQuestion:
