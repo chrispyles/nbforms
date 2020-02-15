@@ -57,7 +57,7 @@ class Form:
         
         self._identifiers = []
         self._widgets = {}
-        self._widget_instances = {}
+        # self._widget_instances = {}
         self._responses = {}
         self._updated_since_last_post = {}
 

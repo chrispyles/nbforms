@@ -1,0 +1,41 @@
+{
+  "server_url": "https://nbforms-demo-server.herokuapp.com/",
+  "notebook": "0",
+  "auth": "none",
+  "questions": [
+    {
+      "identifier": "q1",
+      "type": "multiplechoice",
+      "question": "What is the answer to life, the universe, and everything?",
+      "options": [
+        "40",
+        "41",
+        "42",
+        "43"
+      ]
+    },
+    {
+      "identifier": "q2",
+      "type": "checkbox",
+      "question": "Which are noble gases?",
+      "options": [
+        "Helium",
+        "Neon",
+        "Argon",
+        "Chrome"
+      ]
+    },
+    {
+      "identifier": "q3",
+      "type": "text",
+      "question": "How do you know she is a witch?",
+      "placeholder": ""
+    },
+    {
+      "identifier": "q4",
+      "type": "paragraph",
+      "question": "List the digits of pi.",
+      "placeholder": "Put the digits here"
+    }
+  ]
+}

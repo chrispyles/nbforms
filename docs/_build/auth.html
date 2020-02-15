@@ -17,45 +17,35 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="nbforms package" href="nbforms.html" />
     <link rel="prev" title="Taking Attendance" href="attendance.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: white" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -91,6 +81,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install_deploy.html">Installation and Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebook_usage.html">Notebook Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attendance.html">Taking Attendance</a></li>
@@ -168,7 +159,7 @@
 <h1>OAuth Providers<a class="headerlink" href="#oauth-providers" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="nbforms-auth">
 <h2>nbforms Auth<a class="headerlink" href="#nbforms-auth" title="Permalink to this headline">¶</a></h2>
-<p>nbforms auth is the default auth provider, and is very simple. When you instantiate a Notebook, it will ask the user to input a username and a password. If the username already exists on the server, the password will be checked and an API key will be generated, to be stored in the <code class="docutils literal notranslate"><span class="pre">Notebook</span></code> class. If it does not exist, a new user will be created, and an API key generated. If the user <em>does</em> exist but an incorrect password is provided, the cell will error. As noted in <a class="reference internal" href="notebook_usage.html"><span class="doc">Notebook Usage</span></a>, logging in creates a global variable that means if another <code class="docutils literal notranslate"><span class="pre">Notebook</span></code> instance is created, the user will <em>not</em> be asked to log in again.</p>
+<p>nbforms auth is the default auth provider, and is very simple. When you instantiate a Form, it will ask the user to input a username and a password. If the username already exists on the server, the password will be checked and an API key will be generated, to be stored in the <code class="docutils literal notranslate"><span class="pre">Form</span></code> class. If it does not exist, a new user will be created, and an API key generated. If the user <em>does</em> exist but an incorrect password is provided, the cell will error. As noted in <a class="reference internal" href="notebook_usage.html"><span class="doc">Notebook Usage</span></a>, logging in creates a global variable that means if another <code class="docutils literal notranslate"><span class="pre">Form</span></code> instance is created, the user will <em>not</em> be asked to log in again.</p>
 </div>
 <div class="section" id="google-oauth">
 <h2>Google OAuth<a class="headerlink" href="#google-oauth" title="Permalink to this headline">¶</a></h2>
@@ -187,7 +178,7 @@
         <a href="nbforms.html" class="btn btn-neutral float-right" title="nbforms package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="attendance.html" class="btn btn-neutral float-left" title="Taking Attendance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="attendance.html" class="btn btn-neutral" title="Taking Attendance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -196,7 +187,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Chris Pyles
+        &copy; Copyright 2020, Chris Pyles.
 
     </p>
   </div>
@@ -213,16 +204,35 @@
   
 
 
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'en',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

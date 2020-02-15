@@ -11,6 +11,7 @@
    :caption: Contents:
    :hidden:
 
+   changelog
    install_deploy
    notebook_usage
    attendance

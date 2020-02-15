@@ -4,3 +4,4 @@ requests
 ipython
 ipywidgets
 nbforms
+responses
