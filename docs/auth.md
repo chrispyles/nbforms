@@ -2,7 +2,7 @@
 
 ## nbforms Auth
 
-nbforms auth is the default auth provider, and is very simple. When you instantiate a Notebook, it will ask the user to input a username and a password. If the username already exists on the server, the password will be checked and an API key will be generated, to be stored in the `Notebook` class. If it does not exist, a new user will be created, and an API key generated. If the user _does_ exist but an incorrect password is provided, the cell will error. As noted in [Notebook Usage](notebook_usage.md), logging in creates a global variable that means if another `Notebook` instance is created, the user will _not_ be asked to log in again.
+nbforms auth is the default auth provider, and is very simple. When you instantiate a Form, it will ask the user to input a username and a password. If the username already exists on the server, the password will be checked and an API key will be generated, to be stored in the `Form` class. If it does not exist, a new user will be created, and an API key generated. If the user _does_ exist but an incorrect password is provided, the cell will error. As noted in [Notebook Usage](notebook_usage.md), logging in creates a global variable that means if another `Form` instance is created, the user will _not_ be asked to log in again.
 
 ## Google OAuth
 

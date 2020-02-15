@@ -5,3 +5,4 @@ build
 *.egg-info
 .ipynb_checkpoints
 .coverage
+test-demo

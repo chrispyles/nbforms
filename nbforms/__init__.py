@@ -2,7 +2,7 @@
 ###### nbforms Python API #####
 ###############################
 
-# TODO: change from tabs to vboxes
+# TODO: change api keys to stored in dictionary with server url keys
 
 from .widgets import *
 
@@ -15,6 +15,8 @@ from io import StringIO
 from getpass import getpass
 from ipywidgets import interact, Button, VBox, HBox, interactive_output, Label, Tab
 from IPython.display import display, HTML
+
+__API_KEYS__ = {}
 
 class Form:
     """nbforms class for interacting with an nbforms server
@@ -75,9 +77,9 @@ class Form:
         # check to see if there's already a key in the environment from another
         # Notebook instance
         try:
-            global __NBFORMS_API_KEY__
-            if __NBFORMS_API_KEY__:
-                self._api_key = __NBFORMS_API_KEY__
+            # global __NBFORMS_API_KEY__
+            if __API_KEYS__:
+                self._api_key = __API_KEYS__[self._server_url]
             else:
                 self._auth()
 
@@ -85,7 +87,7 @@ class Form:
             self._auth()
 
         # create global API key
-        __NBFORMS_API_KEY__ = self._api_key
+        __API_KEYS__[self._server_url] = self._api_key
             
 
     def _auth(self):
