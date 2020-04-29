@@ -2,8 +2,6 @@
 ###### nbforms Python API #####
 ###############################
 
-# TODO: change api keys to stored in dictionary with server url keys
-
 from .widgets import *
 
 import datascience as ds

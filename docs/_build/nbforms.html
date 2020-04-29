@@ -159,75 +159,61 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nbforms" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nbforms.Form">
-<em class="property">class </em><code class="descclassname">nbforms.</code><code class="descname">Form</code><span class="sig-paren">(</span><em>config_path='nbforms_config.json'</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">nbforms.</code><code class="sig-name descname">Form</code><span class="sig-paren">(</span><em class="sig-param">config_path='nbforms_config.json'</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>nbforms class for interacting with an nbforms server</p>
 <p>The Form class sends requests to the nbforms server that records users’
 resposnes. It provides auth so that users can be differentiated on the server,
 stores users’ responses from widgets, generates and displays the necessary
 widgets, and pulls data from the server for analysis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config_path</strong> (<em>str</em>) – Path to your nbforms config file</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_path</strong> (<em>str</em>) – Path to your nbforms config file</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="nbforms.Form.ask">
-<code class="descname">ask</code><span class="sig-paren">(</span><em>*identifiers</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.ask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ask</code><span class="sig-paren">(</span><em class="sig-param">*identifiers</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.ask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ask any or all questions in the config file and display widgets</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifiers</strong> – question identifiers to be asked in the widget; defaults to all</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifiers</strong> – question identifiers to be asked in the widget; defaults to all</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="nbforms.Form.take_attendance">
-<code class="descname">take_attendance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.take_attendance" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">take_attendance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.take_attendance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log attendance on the nbforms server</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nbforms.Form.to_df">
-<code class="descname">to_df</code><span class="sig-paren">(</span><em>*identifiers</em>, <em>user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.to_df" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">to_df</code><span class="sig-paren">(</span><em class="sig-param">*identifiers</em>, <em class="sig-param">user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.to_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get data from the server and return a pandas DataFrame</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifiers</strong> – which questions to include in the table, defaults to all</li>
-<li><strong>user_hashes</strong> (<em>bool</em>) – whether to include hashes of usernames</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifiers</strong> – which questions to include in the table, defaults to all</p></li>
+<li><p><strong>user_hashes</strong> (<em>bool</em>) – whether to include hashes of usernames</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="nbforms.Form.to_table">
-<code class="descname">to_table</code><span class="sig-paren">(</span><em>*identifiers</em>, <em>user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.to_table" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">to_table</code><span class="sig-paren">(</span><em class="sig-param">*identifiers</em>, <em class="sig-param">user_hashes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nbforms.Form.to_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get data from the server and return a datascience Table</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>identifiers</strong> – which questions to include in the table, defaults to all</li>
-<li><strong>user_hashes</strong> (<em>bool</em>) – whether to include hashes of usernames</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifiers</strong> – which questions to include in the table, defaults to all</p></li>
+<li><p><strong>user_hashes</strong> (<em>bool</em>) – whether to include hashes of usernames</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -286,6 +272,7 @@ widgets, and pulls data from the server for analysis.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
 
   
 
