@@ -14,7 +14,7 @@ Before using nbforms in a notebook, you must deploy a webapp to Heroku which wil
 
 The webapp is maintained in [chrispyles/nbforms-server](https://github.com/chrispyles/nbforms-server) on Github. Click the button below to deploy to Heroku:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/chrispyles/nbforms-server)
+[![](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/chrispyles/nbforms-server)
 
 Each server comes with a config generator, which will automatically generate the configuation file needed to run nbforms in the notebook (cf. [Notebook Usage](notebook_usage.md)).
 
