@@ -81,7 +81,7 @@ class Form:
             else:
                 self._auth()
 
-        except NameError:
+        except:
             self._auth()
 
         # create global API key
