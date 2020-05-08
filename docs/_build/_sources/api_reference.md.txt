@@ -1,5 +1,0 @@
-# API Reference
-
-```eval_rst
-.. automodule:: nbforms
-```
