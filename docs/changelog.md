@@ -8,6 +8,7 @@
 * Rewrote Python client library
 * Removed support for Google OAuth to authenticate with a server instance
 * Added ability to seed users from a CSV file for a server instance
+* Allowed users to enter server URL during authentication
 
 **v0.5.1:**
 

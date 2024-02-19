@@ -71,7 +71,7 @@ This will output the widget and a "Submit" button that, when clicked, will send 
 
 ### Retrieving Data
 
-nbforms allows you to get your data from the server and collect it into either a datascience `Table` or a pandas `DataFrame`. To retrieve the responses from the server, use `Form.to_table` or `Form.to_df`; the optional `user_hashes` argument (default `False`) indicates whether or not to include a column with a randomly generated string as a pseudo-username. Note that these pseudonymized usernames are ephemeral and will change each time you run `Form.to_table` and `Form.to_df`.
+nbforms allows you to get your data from the server and collect it into either a datascience `Table` or a pandas `DataFrame`. To retrieve the responses from the server, use `Form.to_table` or `Form.to_df`; the optional `user_hashes` argument (default `False`) indicates whether or not to include a column with a pseudonymized username.
 
 ```python
 # datascience Table
