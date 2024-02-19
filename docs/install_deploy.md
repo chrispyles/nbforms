@@ -44,7 +44,9 @@ Note that the process described above involves running a **development** server 
 
 ## Authentication
 
-<!-- TODO: NBFORMS_SERVER_NO_AUTH_REQUIRED -->
+By default, any time a user authenticates with a username that is not present in the database, a new user is created with the password they provided. If the user already exists, the provided password is verified and, if correct, they are provided with an API key. To prevent malicious users from stealing other users' usernames before they log in for the first time, you can seed the database (more on this [below](#seeding-data)).
+
+It is also possible to run the server such that each session is treated as a different user (requiring no authentication). To enable this, set an environment variable `NBFORMS_SERVER_NO_AUTH_REQUIRED="true"` in the environment running the server and set `auth` to `none` in your nbforms config (more details [here](./notebook_usage)). In this mode, every time a `Form` is instantiated, it will receive an API key that corresponds to a **new** user in the database; this means that if a user runs the cell creating a `Form` more than once, each run will create a `Form` instance attached to a different user.
 
 ## Managing the Server
 

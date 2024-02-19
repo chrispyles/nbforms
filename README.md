@@ -1,5 +1,7 @@
 # nbforms
 
+[![Run tests](https://github.com/chrispyles/nbforms/actions/workflows/run-tests.yml/badge.svg)](https://github.com/chrispyles/nbforms/actions/workflows/run-tests.yml)
+[![codecov](https://codecov.io/github/chrispyles/nbforms/graph/badge.svg?token=GK2LAP9034)](https://codecov.io/github/chrispyles/nbforms)
 [![Documentation Status](https://readthedocs.org/projects/nbforms/badge/?version=latest)](https://nbforms.readthedocs.io/en/latest/?badge=latest)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrispyles/nbforms/master?filepath=demo%2Fdemo.ipynb)
 
