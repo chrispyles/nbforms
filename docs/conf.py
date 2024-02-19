@@ -19,15 +19,15 @@ import sys
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
-import recommonmark
+
 from recommonmark.transform import AutoStructify
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'nbforms'
-copyright = '2020, Chris Pyles'
-author = 'Chris Pyles'
+copyright = '2024, Christopher Pyles'
+author = 'Christopher Pyles'
 
 # The short X.Y version
 version = ''
@@ -45,13 +45,13 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.githubpages',
-    'recommonmark',
-    'sphinx.ext.autodoc', 
-    'sphinx.ext.coverage', 
-    'sphinx.ext.napoleon',
-    'sphinx_markdown_tables'
+  'sphinx.ext.autodoc',
+  'sphinx.ext.githubpages',
+  'recommonmark',
+  'sphinx.ext.autodoc', 
+  'sphinx.ext.coverage', 
+  'sphinx.ext.napoleon',
+  'sphinx_markdown_tables',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -95,113 +95,27 @@ pygments_style = 'sphinx'
 #
 html_theme = 'sphinx_rtd_theme'
 
-# html_logo = "nbforms-logo.jpg"
-
 html_theme_options = {
-    'canonical_url': '',
-    # 'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
-    'logo_only': False,
-    'display_version': True,
-    'prev_next_buttons_location': 'bottom',
-    'style_external_links': False,
-    'vcs_pageview_mode': '',
-    'style_nav_header_background': 'white',
-    # Toc options
-    'collapse_navigation': True,
-    'sticky_navigation': True,
-    'navigation_depth': 2,
-    'includehidden': True,
-    'titles_only': False,
+  'canonical_url': '',
+  'logo_only': False,
+  'display_version': True,
+  'prev_next_buttons_location': 'bottom',
+  'style_external_links': False,
+  # Toc options
+  'collapse_navigation': True,
+  'sticky_navigation': True,
+  'navigation_depth': 2,
+  'includehidden': True,
+  'titles_only': False,
 }
-
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-#
-# html_theme_options = {}
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-
-# Custom sidebar templates, must be a dictionary that maps document names
-# to template names.
-#
-# The default sidebars (for documents that don't match any pattern) are
-# defined by theme itself.  Builtin themes are using these templates by
-# default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
-# 'searchbox.html']``.
-#
-# html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'] }
-
-
-# -- Options for HTMLHelp output ---------------------------------------------
-
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'nbformsdoc'
-
-
-# -- Options for LaTeX output ------------------------------------------------
-
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
-
-    # The font size ('10pt', '11pt' or '12pt').
-    #
-    # 'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
-
-    # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
-}
-
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (master_doc, 'nbforms.tex', 'nbforms Documentation',
-     'Chris Pyles', 'manual'),
-]
-
-
-# -- Options for manual page output ------------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'nbforms', 'nbforms Documentation',
-     [author], 1)
-]
-
-
-# -- Options for Texinfo output ----------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-    (master_doc, 'nbforms', 'nbforms Documentation',
-     author, 'nbforms', 'One line description of project.',
-     'Miscellaneous'),
-]
 
 
 # -- Extension configuration -------------------------------------------------
+
 def setup(app):
-    app.add_config_value('recommonmark_config', {
-        #'url_resolver': lambda url: github_doc_root + url,
-        # 'enable_auto_toc_tree': True,
-        # 'auto_toc_tree_section': 'Contents',
-        'enable_math': False,
-        'enable_inline_math': False,
-        'enable_eval_rst': True,
-        # 'enable_auto_doc_ref': True,
-    }, True)
-    app.add_transform(AutoStructify)
+  app.add_config_value('recommonmark_config', {
+    'enable_math': False,
+    'enable_inline_math': False,
+    'enable_eval_rst': True,
+  }, True)
+  app.add_transform(AutoStructify)
