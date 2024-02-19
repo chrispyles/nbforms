@@ -17,4 +17,4 @@ pip install nbforms
 
 ## Documentation
 
-The documentation for nbforms and nbforms-server can be found [here](https://nbforms.readthedocs.io/)
+The documentation for nbforms and nbforms-server can be found [here](https://nbforms.readthedocs.io/).
