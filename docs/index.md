@@ -31,4 +31,4 @@ nbforms is a Python package designed to allow forms to be submitted by users suc
 
 Click the button below to see the demo in MyBinder.
 
-[![MyBinder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrispyles/nbforms/master?filepath=demo%2Fdemo.ipynb)
+[![MyBinder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrispyles/nbforms/main?filepath=demo%2Fdemo.ipynb)
