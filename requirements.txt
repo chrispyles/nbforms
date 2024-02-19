@@ -3,5 +3,3 @@ pandas
 requests
 ipython
 ipywidgets
-nbforms
-responses

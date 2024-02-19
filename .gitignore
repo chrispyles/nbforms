@@ -7,3 +7,9 @@ build
 .coverage
 test-demo
 docs/_build
+.venv
+demo/nbforms-server
+.nbforms_server
+/TODOs
+htmlcov
+.pytest_cache

@@ -3,9 +3,14 @@ import setuptools
 with open("README.md", "r") as fh:
 	long_description = fh.read()
 
+with open("nbforms/version.py") as f:
+	env = {}
+	exec(f.read(), env)
+	version = env["__version__"]
+
 setuptools.setup(
 	name = "nbforms",
-	version = "0.5.1",
+	version = version,
 	author = "Chris Pyles",
 	author_email = "cpyles@berkeley.edu",
 	description = "Jupyter Notebook forms using ipywidgets",
