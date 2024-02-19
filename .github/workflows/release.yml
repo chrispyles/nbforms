@@ -35,6 +35,8 @@ jobs:
       - name: Update versions
         run: |
           echo "__version__ = \"${{ github.event.inputs.version }}\"" > nbforms/version.py
+          cat nbforms/version.py
+          git diff
 
       - name: Commit and push
         run: |
