@@ -17,6 +17,9 @@ jobs:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
 
+      # should allow pushing code
+      contents: write
+
     steps:
       - name: Only allow releases off of main
         run: |
