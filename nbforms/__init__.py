@@ -78,11 +78,15 @@ class Form:
       self._config = json.load(f)
 
     # check that config file has required info
-    for k in ["server_url", "questions", "notebook"]:
+    for k in ["questions", "notebook"]:
       if k not in self._config:
         raise ValueError(f"Config file missing required key: {k}")
 
-    self._server_url = self._config["server_url"]
+    if "server_url" in self._config:
+      self._server_url = self._config["server_url"]
+    else:
+      self._server_url = input("Enter the server URL:")
+
     self._notebook = self._config["notebook"]
 
     questions = self._config["questions"]

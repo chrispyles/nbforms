@@ -27,9 +27,15 @@ def make_form(config):
   A context manager that provides a ``Form`` initialized with the provided config. It also stubs
   out ``nbforms.input`` and ``nbforms.getpass`` so that they return predetermined values.
   """
+  def fake_input(prompt):
+    if "server url" in prompt.lower():
+      return "http://myserver.com"
+    else:
+      return "user1"
+
   with mock.patch("nbforms.input") as mocked_input, \
       mock.patch("nbforms.getpass") as mocked_getpass:
-    mocked_input.return_value = "user1"
+    mocked_input.side_effect = fake_input
     mocked_getpass.return_value = "pass1"
 
     fh, fp = tempfile.mkstemp()
@@ -71,11 +77,6 @@ class TestInit:
           pass
 
     return do_test
-
-  test_no_server_url = make_test(
-    {},
-    want_error=ValueError("Config file missing required key: server_url"),
-  )
 
   test_no_questions = make_test(
     {"server_url": ""},
@@ -197,6 +198,29 @@ class TestInit:
     with pytest.raises(RuntimeError, match="Server returned error response during authentication: \\[400\\] doh!"), \
         make_form(config):
       pass
+
+  @responses.activate
+  def test_no_server_url(self):
+    """Test authentication HTTP error response handling in ``Form`` constructor."""
+    responses.post(
+      url = "http://myserver.com/auth",
+      body = "deadbeef",
+      match=[matchers.json_params_matcher({"username": "user1", "password": "pass1"})],
+    )
+
+    config = {
+      "notebook": NOTEBOOK,
+      "questions": [
+        {
+          "identifier": "q1",
+          "type": "text",
+          "question": "A, B, or C?",
+        }
+      ]
+    }
+
+    with make_form(config) as form:
+      assert form._api_key == "deadbeef"
 
   @pytest.mark.parametrize(("identifiers", "want_widgets"), (
     (("q1", "q2"), [
