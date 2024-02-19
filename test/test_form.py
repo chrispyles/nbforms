@@ -79,38 +79,38 @@ class TestInit:
     return do_test
 
   test_no_questions = make_test(
-    {"server_url": ""},
+    {"server_url": SERVER_URL},
     want_error=ValueError("Config file missing required key: questions"),
   )
 
   test_no_notebook = make_test(
-    {"server_url": "", "questions": []},
+    {"server_url": SERVER_URL, "questions": []},
     want_error=ValueError("Config file missing required key: notebook"),
   )
 
   test_no_question_identifier = make_test(
-    {"server_url": "", "notebook": "", "questions": [
+    {"server_url": SERVER_URL, "notebook": "", "questions": [
       {},
     ]},
     want_error=ValueError("Question at index 0 is missing required key 'identifier'"),
   )
 
   test_no_question_type = make_test(
-    {"server_url": "", "notebook": "", "questions": [
+    {"server_url": SERVER_URL, "notebook": "", "questions": [
       {"identifier": "q1"},
     ]},
     want_error=ValueError("Question at index 0 is missing required key 'type'"),
   )
 
   test_invalid_question_type = make_test(
-    {"server_url": "", "notebook": "", "questions": [
+    {"server_url": SERVER_URL, "notebook": "", "questions": [
       {"identifier": "q1", "type": "foo", "question": ""},
     ]},
     want_error=ValueError("Invalid question type: foo"),
   )
 
   test_no_question_question = make_test(
-    {"server_url": "", "notebook": "", "questions": [
+    {"server_url": SERVER_URL, "notebook": "", "questions": [
       {"identifier": "q1", "type": "multiplechoice"},
     ]},
     want_error=ValueError("Question at index 0 is missing required key 'question'"),
@@ -221,6 +221,47 @@ class TestInit:
 
     with make_form(config) as form:
       assert form._api_key == "deadbeef"
+
+  invalid_url_error = ValueError("Invalid server URL; the server URL may contain only a protocol \\(http or https\\), a domain name, and a port")
+
+  @pytest.mark.parametrize(("server_url", "want_auth_domain", "want_error"), (
+    ("http://myapp.com", "http://myapp.com", None),
+    ("http://myapp.com/", "http://myapp.com", None),
+    ("https://myapp.com/", "https://myapp.com", None),
+    ("https://127.0.0.1:5000", "https://127.0.0.1:5000", None),
+    ("http://127.0.0.1:5000/", "http://127.0.0.1:5000", None),
+    ("http://myapp.com/foo", None, invalid_url_error),
+    ("file:///some/path", None, invalid_url_error),
+    ("notaurl", None, invalid_url_error),
+  ))
+  @responses.activate
+  def test_server_url_validation(self, server_url, want_auth_domain, want_error):
+    """Test server URL validation in the ``Form`` constructor."""
+    if want_auth_domain is not None:
+      responses.post(
+        url = f"{want_auth_domain}/auth",
+        body = "deadbeef",
+        match=[matchers.json_params_matcher({"username": "user1", "password": "pass1"})],
+      )
+
+    config = {
+      "server_url": server_url,
+      "notebook": NOTEBOOK,
+      "questions": [
+        {
+          "identifier": "q1",
+          "type": "text",
+          "question": "A, B, or C?",
+        }
+      ]
+    }
+
+    cm = nullcontext()
+    if want_error is not None:
+      cm = pytest.raises(type(want_error), match=str(want_error))
+
+    with cm, make_form(config):
+      pass
 
   @pytest.mark.parametrize(("identifiers", "want_widgets"), (
     (("q1", "q2"), [

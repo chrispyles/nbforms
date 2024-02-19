@@ -1,10 +1,11 @@
 """nbforms: A Python library for interactive multi-user Jupyter notebook forms"""
 
 import datascience as ds
-import pandas as pd
-import requests
-import os
 import json
+import os
+import pandas as pd
+import re
+import requests
 
 from dataclasses import dataclass
 from getpass import getpass
@@ -20,6 +21,9 @@ if TYPE_CHECKING:
   from ipywidgets import Output
 
   from .widgets import QuestionWidget
+
+
+SERVER_URL_REGEX = re.compile(r"^https?://[\w\-.]+(?::\d+)?/?$")
 
 
 @dataclass
@@ -86,6 +90,14 @@ class Form:
       self._server_url = self._config["server_url"]
     else:
       self._server_url = input("Enter the server URL:")
+
+    # check validity of server URL
+    if not SERVER_URL_REGEX.match(self._server_url):
+      raise ValueError(f"Invalid server URL; the server URL may contain only a protocol (http or https), a domain name, and a port")
+
+    # remove trailing slash if present
+    if self._server_url.endswith("/"):
+      self._server_url = self._server_url[:-1]
 
     self._notebook = self._config["notebook"]
 
